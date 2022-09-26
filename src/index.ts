@@ -9,30 +9,37 @@ const app = new Application({
 
 const background:Sprite = Sprite.from("Court.jpg");
 background.anchor.set(.5,.5);
-background.x = window.innerWidth/ 2;
-background.y = window.innerHeight / 2;
-background.width = window.innerWidth / 2;
-background.height= window.innerHeight;
-
-const player:Sprite = Sprite.from("Racket.png");
-
-app.stage.addChild(player);
+const player:Sprite = Sprite.from("Player.png");
 player.anchor.set(.5,.5);
-player.x = window.innerWidth/ 2;
-player.y = window.innerHeight / 2;
-player.width = window.innerWidth / 15;
-player.height= window.innerHeight / 15;
+const racket:Sprite = Sprite.from("Racket.png");
+
 
 app.stage.addChild(background);
 app.stage.addChild(player);
+app.stage.addChild(racket);
 
 // handle resize
 window.addEventListener('resize', resize);
 function resize(){
     app.renderer.resize(window.innerWidth, window.innerHeight);
-    background.x = window.innerWidth/ 2;
+    background.x = window.innerWidth / 2;
     background.y = window.innerHeight / 2;
-    background.width = window.innerWidth / 2;
-    background.height= window.innerHeight;
+    player.x = window.innerWidth / 2;
+    player.y = window.innerHeight / 2;
+    if(window.innerWidth < window.innerHeight){
+	background.width = window.innerWidth * .9;
+	background.height= background.width;
+    }
+    if(window.innerHeight < window.innerWidth){
+	background.height= window.innerHeight * 0.9;
+	background.width = background.height;
+    }
+    player.width = background.width / 10;
+    player.height = player.width + 1;
+
+    racket.x = player.x + (player.width / 2);
+    racket.y = player.y - (.6 * player.height);
+    racket.width = player.width/1.5;
+    racket.height = racket.width;
 }
 resize();
