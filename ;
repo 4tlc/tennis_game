@@ -7,22 +7,12 @@ const app = new Application({
 	backgroundColor: 0x66666,
 });
 
-const background = Sprite.from("Court.svg");
-background.anchor.set(.5,.5);
-background.x = window.innerWidth/ 2;
-background.y = window.innerHeight / 2;
-background.width = window.innerWidth / 2;
-background.height= window.innerHeight;
-
+const background: Sprite = Sprite.from("../static/Court.png");
 app.stage.addChild(background);
 
 // handle resize
 window.addEventListener('resize', resize);
 function resize(){
     app.renderer.resize(window.innerWidth, window.innerHeight);
-    background.x = window.innerWidth/ 2;
-    background.y = window.innerHeight / 2;
-    background.width = window.innerWidth / 2;
-    background.height= window.innerHeight;
 }
 resize();
