@@ -7,7 +7,7 @@ const app = new Application({
 	backgroundColor: 0x66666,
 });
 
-const background = Sprite.from("Court.svg");
+const background = Sprite.from("Court.jpg");
 background.anchor.set(.5,.5);
 background.x = window.innerWidth/ 2;
 background.y = window.innerHeight / 2;
