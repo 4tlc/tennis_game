@@ -1,7 +1,14 @@
 import {Sprite,Ticker} from 'pixi.js';
 
+let isSwinging: boolean = false;
 export function doSwing(background: Sprite, racket: Sprite){
     //animation for swing
+
+    if(isSwinging)
+	return;
+
+    isSwinging = true;
+
     let upSwingTicker = new Ticker();
     let downSwingTicker = new Ticker();
     downSwingTicker.add((delta: number) => {
@@ -29,6 +36,7 @@ export function doSwing(background: Sprite, racket: Sprite){
 	    racket.position.y-=delta * (background.height / 250);
 	}else{
 	    upSwingTicker.destroy();
+	    isSwinging = false;
 	}
     }
 }
