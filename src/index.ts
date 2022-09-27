@@ -16,7 +16,6 @@ const app = new Application({
 	backgroundColor: 0x66666,
 });
 
-
 const gameContainer:Container = new Container();
 const background:Sprite = Sprite.from("Court.jpg");
 background.anchor.set(.5,.5);
@@ -42,6 +41,27 @@ document.onkeydown = document.onkeyup = (e) =>{
 app.ticker.add((delta:number) => {
     let x: number = 0;
     let y: number = 0;
+    console.log(player.position.y);
+    if(player.position.y <= 0){
+	player.position.y += 1;
+	racket.position.y += 1;
+	return;
+    }
+    if(player.position.y >= background.height/2.3){
+	player.position.y -= 1;
+	racket.position.y -= 1;
+	return;
+    }
+    if(player.position.x >= background.width / 2.3){
+	player.position.x -= 1;
+	racket.position.x -= 1;
+	return;
+    }
+    if(player.position.x <= background.width / -2.3){
+	player.position.x += 1;
+	racket.position.x += 1;
+	return;
+    }
     if(pressed["w"])
 	y--;
     if(pressed["s"])
@@ -76,7 +96,7 @@ function placeElements(){
     }
     gameContainer.x = newWidth / 2;
     gameContainer.y = newHeight / 2;
-    speed = background.width / 50;
+    speed = background.width / 100;
     // recenter everything
     player.position.x = 0;
     player.position.y = background.height / 4;
