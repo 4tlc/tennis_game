@@ -1,37 +1,14 @@
-import { Application, Container, Sprite } from 'pixi.js'
+import {handleMovement} from './updateFunctions';
+import {elements} from './elements';
 
-let speed: number;
-type map = {
-    [key: string]: boolean;
-}
-let pressed: map = {};
-let oldBGWidth: number;
-let oldBGHeight: number;
-
-const app = new Application({
-	view: document.getElementById("pixi-canvas")as HTMLCanvasElement,
-	resizeTo: window,
-	resolution: window.devicePixelRatio || 1,
-	autoDensity: true,
-	backgroundColor: 0x66666,
-});
-
-const gameContainer:Container = new Container();
-const background:Sprite = Sprite.from("Court.jpg");
-background.anchor.set(.5,.5);
-
-const playerContainer:Container = new Container();
-const player:Sprite = Sprite.from("Player.png");
-player.anchor.set(.5,.5);
-const racket:Sprite = Sprite.from("Racket.png");
-racket.anchor.set(.5,.5);
-playerContainer.addChild(player);
-playerContainer.addChild(racket);
-
-gameContainer.addChild(background);
-gameContainer.addChild(playerContainer);
-app.stage.addChild(gameContainer);
-
+let speed = elements.speed;
+const pressed = elements.pressed;
+const app = elements.app;
+const gameContainer = elements.gameContainer;
+// const playerContainer = elements.playerContainer;
+const background = elements.background;
+const player = elements.player;
+const racket = elements.racket;
 //movement
 document.onkeydown = document.onkeyup = (e) =>{
     let input = e.key.toLowerCase();
@@ -39,41 +16,7 @@ document.onkeydown = document.onkeyup = (e) =>{
 }
 
 app.ticker.add((delta:number) => {
-    let x: number = 0;
-    let y: number = 0;
-    console.log(player.position.y);
-    if(player.position.y <= 0){
-	player.position.y += 1;
-	racket.position.y += 1;
-	return;
-    }
-    if(player.position.y >= background.height/2.3){
-	player.position.y -= 1;
-	racket.position.y -= 1;
-	return;
-    }
-    if(player.position.x >= background.width / 2.3){
-	player.position.x -= 1;
-	racket.position.x -= 1;
-	return;
-    }
-    if(player.position.x <= background.width / -2.3){
-	player.position.x += 1;
-	racket.position.x += 1;
-	return;
-    }
-    if(pressed["w"])
-	y--;
-    if(pressed["s"])
-	y++;
-    if(pressed["a"])
-	x--;
-    if(pressed["d"])
-	x++;
-    player.position.x += x * speed * delta;
-    player.position.y += y * speed * delta;
-    racket.position.x += x * speed * delta;
-    racket.position.y += y * speed * delta;
+    handleMovement(delta, speed, pressed, player, racket, background);
 });
 // handle resize
 window.addEventListener('resize', placeElements);
@@ -87,6 +30,7 @@ function placeElements(){
     let newWidth: number = window.innerWidth;
     let newHeight: number = window.innerHeight;
     app.renderer.resize(newWidth,newHeight);
+
     if(newWidth < newHeight){
 	gameContainer.width = newWidth * .9;
 	gameContainer.height= gameContainer.width;
@@ -94,6 +38,7 @@ function placeElements(){
 	gameContainer.height= newHeight * 0.9
 	gameContainer.width = gameContainer.height;
     }
+
     gameContainer.x = newWidth / 2;
     gameContainer.y = newHeight / 2;
     speed = background.width / 100;
