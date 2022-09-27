@@ -1,6 +1,8 @@
 import {Sprite} from "pixi.js";
 import {map} from './elements';
 
+import {doSwing} from './animations';
+
 export function handleMovement(delta: number, speed: number, pressed: map, player: Sprite, racket: Sprite, background: Sprite){
     let x: number = 0;
     let y: number = 0;
@@ -36,4 +38,9 @@ export function handleMovement(delta: number, speed: number, pressed: map, playe
     player.position.y += y * speed * delta;
     racket.position.x += x * speed * delta;
     racket.position.y += y * speed * delta;
+}
+
+export function handleShotKeys(pressed: map,racket: Sprite, background: Sprite){
+    if(pressed["j"])
+	doSwing(background, racket);
 }
