@@ -10,14 +10,36 @@ let oldBGHeight: number;
 
 const app = new Application({
 	view: document.getElementById("pixi-canvas")as HTMLCanvasElement,
+	resizeTo: window,
 	resolution: window.devicePixelRatio || 1,
 	autoDensity: true,
 	backgroundColor: 0x66666,
 });
 
-app.ticker.add(update);
 
-function update(delta: number){
+const gameContainer:Container = new Container();
+const background:Sprite = Sprite.from("Court.jpg");
+background.anchor.set(.5,.5);
+
+const playerContainer:Container = new Container();
+const player:Sprite = Sprite.from("Player.png");
+player.anchor.set(.5,.5);
+const racket:Sprite = Sprite.from("Racket.png");
+racket.anchor.set(.5,.5);
+playerContainer.addChild(player);
+playerContainer.addChild(racket);
+
+gameContainer.addChild(background);
+gameContainer.addChild(playerContainer);
+app.stage.addChild(gameContainer);
+
+//movement
+document.onkeydown = document.onkeyup = (e) =>{
+    let input = e.key.toLowerCase();
+    pressed[input] = e.type === 'keydown';
+}
+
+app.ticker.add((delta:number) => {
     let x: number = 0;
     let y: number = 0;
     if(pressed["w"])
@@ -28,43 +50,23 @@ function update(delta: number){
 	x--;
     if(pressed["d"])
 	x++;
-    player.x += x * speed * delta;
-    player.y += y * speed * delta;
-    racket.x += x * speed * delta;
-    racket.y += y * speed * delta;
-}
-
-const gameContainer:Container = new Container();
-app.stage.addChild(gameContainer);
-
-const background:Sprite = Sprite.from("Court.jpg");
-background.anchor.set(.5,.5);
-const player:Sprite = Sprite.from("Player.png");
-player.anchor.set(.5,.5);
-const racket:Sprite = Sprite.from("Racket.png");
-
-gameContainer.addChild(background);
-gameContainer.addChild(player);
-
-//movement
-document.onkeydown = document.onkeyup = (e) =>{
-    let input = e.key.toLowerCase();
-    pressed[input] = e.type === 'keydown';
-}
-
+    player.position.x += x * speed * delta;
+    player.position.y += y * speed * delta;
+    racket.position.x += x * speed * delta;
+    racket.position.y += y * speed * delta;
+});
 // handle resize
-window.addEventListener('resize', resize);
-function resize(){
-    placeElements(false);
-}
+window.addEventListener('resize', placeElements);
 
-function startGame(){
-    placeElements(true);
-}
+window.onload = () => {
+    console.log("loaded");
+    placeElements();
+};
 
-function placeElements(isStart: boolean){
+function placeElements(){
     let newWidth: number = window.innerWidth;
     let newHeight: number = window.innerHeight;
+    app.renderer.resize(newWidth,newHeight);
     if(newWidth < newHeight){
 	gameContainer.width = newWidth * .9;
 	gameContainer.height= gameContainer.width;
@@ -72,40 +74,16 @@ function placeElements(isStart: boolean){
 	gameContainer.height= newHeight * 0.9
 	gameContainer.width = gameContainer.height;
     }
-
     gameContainer.x = newWidth / 2;
     gameContainer.y = newHeight / 2;
-    if(isStart){
-	console.log("start");
-    }
-}
-function fakeplaceElements(isStart: boolean){
-    let newWidth: number = window.innerWidth;
-    let newHeight: number = window.innerHeight;
-    speed = newWidth / 100;
-    app.renderer.resize(newWidth,newHeight);
-    background.x = newWidth / 2;
-    background.y = newHeight / 2;
-    if(newWidth < newHeight){
-	background.width = window.innerWidth * .9;
-	background.height= background.width;
-    }else{
-	background.height= newHeight * 0.9
-	background.width = background.height;
-    }
-    player.width = background.width / 10;
-    player.height = background.height /10;
-    racket.width = player.width/1.5;
-    racket.height = racket.width;
-    if(isStart){
-	player.x = newWidth / 2;
-	player.y = newHeight - (newHeight / 4);
-    }else{
-    }
-    racket.x = player.x + (player.width / 2);
-    racket.y = player.y - (.6 * player.height);
+    speed = background.width / 50;
+    // recenter everything
+    player.position.x = 0;
+    player.position.y = background.height / 4;
+    player.position.y = background.height / 4;
 
-    oldBGWidth = background.width;
-    oldBGHeight = background.height
+    racket.position.x = 0.9 * player.width;
+    racket.position.y =  2.20 * player.height;
+    racket.scale.x = 0.8;
+    racket.scale.y = 0.8;
 }
-startGame();
