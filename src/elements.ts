@@ -1,6 +1,5 @@
 import {Application, Container, Sprite} from "pixi.js";
 
-let speed: number = 0;
 export type map = {
     [key: string]: boolean;
 }
@@ -31,7 +30,6 @@ gameContainer.addChild(playerContainer);
 app.stage.addChild(gameContainer);
 
 export const elements = {
-    speed: speed,
     pressed: pressed,
     app:app,
     gameContainer: gameContainer,

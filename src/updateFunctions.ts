@@ -2,9 +2,8 @@ import {Sprite} from "pixi.js";
 import {map} from './elements';
 
 export function handleMovement(delta: number, speed: number, pressed: map, player: Sprite, racket: Sprite, background: Sprite){
-        let x: number = 0;
+    let x: number = 0;
     let y: number = 0;
-    console.log(player.position.y);
     if(player.position.y <= 0){
 	player.position.y += 1;
 	racket.position.y += 1;
