@@ -16,6 +16,8 @@ const app = new Application({
 const gameContainer:Container = new Container();
 const background:Sprite = Sprite.from("Court.jpg");
 background.anchor.set(.5,.5);
+const ball:Sprite = Sprite.from("ball.jpg");
+ball.anchor.set(.5,.5);
 
 const playerContainer:Container = new Container();
 const player:Sprite = Sprite.from("Player.png");
@@ -26,6 +28,7 @@ playerContainer.addChild(player);
 playerContainer.addChild(racket);
 
 gameContainer.addChild(background);
+gameContainer.addChild(ball);
 gameContainer.addChild(playerContainer);
 app.stage.addChild(gameContainer);
 
@@ -36,5 +39,6 @@ export const elements = {
     //playerContainer: playerContainer,
     background: background,
     player: player,
-    racket: racket
+    racket: racket,
+    ball: ball
 }

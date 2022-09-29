@@ -1,15 +1,16 @@
 import {handleMovement, handleShotKeys} from './updateFunctions';
 import {elements} from './elements';
-import {Ticker} from 'pixi.js';
+import {Container, Sprite, Ticker} from 'pixi.js';
 
 let speed: number = 0;
 const pressed = elements.pressed;
 const app = elements.app;
-const gameContainer = elements.gameContainer;
+const gameContainer:Container = elements.gameContainer;
 // const playerContainer = elements.playerContainer;
-const background = elements.background;
-const player = elements.player;
-const racket = elements.racket;
+const background:Sprite = elements.background;
+const player:Sprite = elements.player;
+const racket:Sprite = elements.racket;
+const ball:Sprite = elements.ball;
 //movement
 document.onkeydown = document.onkeyup = (e) =>{
     let input = e.key.toLowerCase();
@@ -19,8 +20,8 @@ document.onkeydown = document.onkeyup = (e) =>{
 let gameTicker = new Ticker();
 
 gameTicker.add((delta:number) => {
-    handleMovement(delta, speed, pressed, player, racket, background);
-    handleShotKeys(pressed, racket, background);
+    handleMovement(pressed, delta, speed);
+    handleShotKeys(pressed);
 });
 gameTicker.start();
 

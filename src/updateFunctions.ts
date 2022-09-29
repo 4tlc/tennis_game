@@ -1,9 +1,18 @@
 import {Sprite} from "pixi.js";
 import {map} from './elements';
-
+import { elements } from "./elements";
 import {doSwing} from './animations';
 
-export function handleMovement(delta: number, speed: number, pressed: map, player: Sprite, racket: Sprite, background: Sprite){
+const player:Sprite = elements.player;
+const racket:Sprite = elements.racket;
+const background:Sprite = elements.background;
+export let isSwinging = false;
+
+export function setIsSwinging(newState: boolean){
+    isSwinging = newState;
+}
+
+export function handleMovement(pressed: map, delta: number, speed: number){
     let x: number = 0;
     let y: number = 0;
     if(player.position.y <= 0){
@@ -40,7 +49,8 @@ export function handleMovement(delta: number, speed: number, pressed: map, playe
     racket.position.y += y * speed * delta;
 }
 
-export function handleShotKeys(pressed: map,racket: Sprite, background: Sprite){
+export function handleShotKeys(pressed: map){
     if(pressed["j"])
 	doSwing(background, racket);
+    console.log(isSwinging);
 }

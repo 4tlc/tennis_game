@@ -1,16 +1,17 @@
 import {Sprite,Ticker} from 'pixi.js';
+import {setIsSwinging, isSwinging} from "./updateFunctions";
 
-let isSwinging: boolean = false;
 export function doSwing(background: Sprite, racket: Sprite){
     //animation for swing
 
     if(isSwinging)
 	return;
 
-    isSwinging = true;
+    setIsSwinging(true);
 
     let upSwingTicker = new Ticker();
     let downSwingTicker = new Ticker();
+
     downSwingTicker.add((delta: number) => {
 	moveRacketDown(delta);
     });
@@ -30,13 +31,12 @@ export function doSwing(background: Sprite, racket: Sprite){
     }
 
     function moveRacketUp(delta:number){
-
 	if(racket.transform.rotation > 0){
 	    racket.transform.rotation -= .1 * delta;
 	    racket.position.y-=delta * (background.height / 250);
 	}else{
 	    upSwingTicker.destroy();
-	    isSwinging = false;
+	    setIsSwinging(false);
 	}
     }
 }
