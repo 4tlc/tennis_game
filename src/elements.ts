@@ -16,7 +16,7 @@ const app = new Application({
 const gameContainer:Container = new Container();
 const background:Sprite = Sprite.from("Court.jpg");
 background.anchor.set(.5,.5);
-const ball:Sprite = Sprite.from("ball.jpg");
+const ball:Sprite = Sprite.from("ball.png");
 ball.anchor.set(.5,.5);
 
 const playerContainer:Container = new Container();
