@@ -20,7 +20,7 @@ const ball:Sprite = Sprite.from("ball.png");
 ball.anchor.set(.5,.5);
 
 const playerContainer:Container = new Container();
-const player:Sprite = Sprite.from("Player.png");
+export const player:Sprite = Sprite.from("Player.png");
 player.anchor.set(.5,.5);
 const racket:Sprite = Sprite.from("Racket.png");
 racket.anchor.set(.5,.5);

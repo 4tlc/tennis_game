@@ -1,6 +1,7 @@
 import {handleMovement, handleShotKeys} from './updateFunctions';
 import {elements} from './elements';
 import {Container, Sprite, Ticker} from 'pixi.js';
+import {rightHand} from './updateFunctions'
 
 let speed: number = 0;
 const pressed = elements.pressed;
@@ -29,7 +30,6 @@ gameTicker.start();
 window.addEventListener('resize', placeElements);
 
 window.onload = () => {
-    console.log("loaded");
     placeElements();
 };
 
@@ -53,9 +53,12 @@ function placeElements(){
     player.position.x = 0;
     player.position.y = background.height / 4;
     player.position.y = background.height / 4;
+    player.scale.x = 1;
+    player.scale.y = 1;
 
     racket.position.x = 0.9 * player.width;
     racket.position.y =  2.20 * player.height;
+    racket.rotation = 0;
     racket.scale.x = 0.8;
     racket.scale.y = 0.8;
 }
