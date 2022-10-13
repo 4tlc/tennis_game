@@ -1,7 +1,6 @@
 import {handleMovement, handleShotKeys} from './updateFunctions';
-import {elements} from './elements';
+import {elements, placeRacket} from './elements';
 import {Container, Sprite, Ticker} from 'pixi.js';
-import {rightHand} from './updateFunctions'
 
 let speed: number = 0;
 const pressed = elements.pressed;
@@ -56,9 +55,8 @@ function placeElements(){
     player.scale.x = 1;
     player.scale.y = 1;
 
-    racket.position.x = 0.9 * player.width;
-    racket.position.y =  2.20 * player.height;
     racket.rotation = 0;
     racket.scale.x = 0.8;
     racket.scale.y = 0.8;
+    placeRacket(1);
 }

@@ -1,6 +1,6 @@
 import {Sprite,Ticker} from 'pixi.js';
 import {setIsSwinging, isSwinging, rightHand} from "./updateFunctions";
-import { player } from './elements'
+import { placeRacket, player } from './elements'
 
 export function doSwing(background: Sprite, racket: Sprite){
     //animation for swing
@@ -39,8 +39,7 @@ export function doSwing(background: Sprite, racket: Sprite){
 	    racket.position.y-=delta * (background.height / 250);
 	}else{
 	    upSwingTicker.destroy();
-	    racket.position.y = player.position.y - (player.height * .3);
-	    racket.position.x = player.position.x + (direction * racket.width * 1.1);
+	    placeRacket(direction);
 	    setIsSwinging(false);
 	}
     }

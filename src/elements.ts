@@ -42,3 +42,8 @@ export const elements = {
     racket: racket,
     ball: ball
 }
+
+export function placeRacket(direction:number){
+    racket.position.y = player.position.y - (player.height * .3);
+    racket.position.x = player.position.x + (direction * racket.width * 1.1);
+}
